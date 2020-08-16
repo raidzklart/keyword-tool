@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    
+    body {
+      font-family: nunito,helvetica,Arial,sans-serif;
+      padding: 0;
+      margin: 0;
+      background-image: repeating-linear-gradient(90deg, hsla(196,0%,79%,0.06) 0px, hsla(196,0%,79%,0.06) 1px,transparent 1px, transparent 96px),repeating-linear-gradient(0deg, hsla(196,0%,79%,0.06) 0px, hsla(196,0%,79%,0.06) 1px,transparent 1px, transparent 96px),repeating-linear-gradient(0deg, hsla(196,0%,79%,0.09) 0px, hsla(196,0%,79%,0.09) 1px,transparent 1px, transparent 12px),repeating-linear-gradient(90deg, hsla(196,0%,79%,0.09) 0px, hsla(196,0%,79%,0.09) 1px,transparent 1px, transparent 12px),linear-gradient(90deg, rgb(255,255,255),rgb(255,255,255));
+    }
+    #jumbotron > p{
+      font-family: nunito,helvetica,Arial,sans-serif;
+      width: 52%;
+      margin: auto;
+      padding: 2em 0;
+      line-height: 1.8em;
+    }
+    #title{
+      width: 100%;
+      margin: auto;
+      padding-bottom: 0.1em;
+      padding-top: 1.5em;
+      margin-bottom: 1em;
+      border-bottom: solid 2px black;
+    }
+    #title > h1{
+      text-align: center;
+      font-size: 38px;
+      font-weight: 500;
+      margin-top: 0;
+      text-transform: uppercase;
+    }
+    #input-form{
+      width: 33%;
+      margin: auto;
+      text-align: center;
+    }
+    #output-form{
+      width: 33%;
+      margin: auto;
+      text-align: center;
+      position: relative;
+    }
+    textarea {
+      outline: none;
+      resize: none;
+      border: solid 2px black;
+      border-radius: 3px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 100%;
+    }
+    #copyToClipboard{
+      position: absolute;
+      top: 7%;
+      right: 2%;
+    }
+    .btn{
+      background: black;
+      border: 2px solid black;
+      color: white;
+      border-radius: 3px;
+      text-align: center;
+    }
+    .btn:hover{
+      background: none;
+      color: black;
+      cursor: pointer;
+    }
+    .btn-lg{
+      font-size: 16px;
+      padding: 0.5em 1em;
+      width: 100%;
+    }
+    #input-form > div{
+      text-align: center;
+      border: solid 2px black;
+      border-radius: 3px;
+      width: 99%;
+      margin: auto;
+      margin-bottom: 1em;
+      margin-top: 1em
+    }
+    #footer {
+      width: 100%;
+      margin: auto;
+      padding-bottom: 0.1em;
+      padding-top: 1.5em;
+      border-top: solid 2px black;
+      margin-top: 1em;
+    }
+    #footer > p {
+      text-align: center;
+      margin-top: 0;
+    }
+    #footer > p > a{
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div id="title">
+      <h1>🔑 Keyword tool for match types</h1>
+    </div>
+  </header>
+<main>
+  <div id="jumbotron">
+    <p>
+      If you bulk upload keyword lists to Google Ads or Microsoft Advertising
+      (we all know it's Bing really) then this tool is for you. Just paste your
+      keyword list into the text box below and then select your match types. At
+      the click of a button you'll be able to copy your list with the match
+      types automatically added.
+    </p>
+  </div>
+  <div id="input-form">
+      <textarea id="input-list" name="input-list" rows="22" cols="50" placeholder="Paste your keyword list here..."></textarea><br>
+      <div class="checkboxes">
+        <input type="checkbox" id="exact" name="match-type" value="exact" checked>
+        <label for="exact">Exact</label>
+        <input type="checkbox" id="phrase" name="match-type" value="phrase">
+        <label for="phrase">Phrase</label>
+        <input type="checkbox" id="broad" name="match-type" value="broad">
+        <label for="broad">Broad</label> <br>
+        <input type="checkbox" id="bmm" name="match-type" value="bmm">
+        <label for="bmm">BMM</label>
+        <input type="checkbox" id="capitalise" name="match-type" value="capitalise">
+        <label for="capitalise">Capitalise</label>
+        <input type="checkbox" id="exact-neg" name="match-type" value="exact-neg">
+        <label for="exact-neg">Exact Negative </label> <br>
+        <input type="checkbox" id="phrase-neg" name="match-type" value="phrase-neg">
+        <label for="phrase-neg">Phrase Negative</label>
+        <input type="checkbox" id="broad-neg" name="match-type" value="broad-neg">
+        <label for="broad-neg">Broad Negative</label>
+      </div>
+      <input type="submit" value="Concatenate your keywords" id="submit" class="btn btn-lg"> <br>
+  </div>
+  <div id="output-form">
+    <button id="copyToClipboard" class="btn">Copy to clipboard</button><br>
+    <textarea id="output-list" name="output-list" rows="22" cols="50"></textarea>
+ </div>
+</main>
+  <footer>
+    <div id="footer">
+      <p>
+        🛠 Built with ❤️ by <a href="https://github.com/raidzklart" target="_blank">Thomas</a>
+      </p>
+    </div>
+  </footer>
+ <script>
+  let input = document.getElementById("input-list");
+  let output =  document.getElementById("output-list");
+  let submit = document.getElementById("submit"); 
+  let exactBox = document.getElementById("exact"); 
+  let phraseBox = document.getElementById("phrase"); 
+  let broadBox = document.getElementById("broad"); 
+  let bmmBox = document.getElementById("bmm"); 
+  let capitaliseBox = document.getElementById("capitalise"); 
+  let exactNegBox = document.getElementById("exact-neg"); 
+  let phraseNegBox = document.getElementById("phrase-neg"); 
+  let broadNegBox = document.getElementById("broad-neg"); 
+  let copyButton = document.getElementById("copyToClipboard");
+
+  submit.onclick = function(){
+    let outputArray = input.value.split(/\r?\n/)
+    console.log(outputArray)
+    output.value = "";
+    if (exactBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "[" + outputArray[i] + "]\n";
+        }
+      }
+    }
+    if (phraseBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "\""+ outputArray[i] + "\"\n";
+        }
+      }
+    }
+    if (broadBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += outputArray[i] + "\n";
+        }
+      }
+    }
+    if (bmmBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "+" + outputArray[i].split(" ").join(" +") + "\n";
+        }
+      }
+    }
+    if (capitaliseBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value +=  outputArray[i].replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}) + "\n";
+        }
+      }
+    }
+    if (exactNegBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "-[" + outputArray[i] + "]\n";
+        }
+      }
+    }
+    if (phraseNegBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "-\""+ outputArray[i] + "\"\n";
+        }
+      }
+    }
+    if (broadNegBox.checked) {
+      for(let i = 0; i < outputArray.length; i++){
+        if (outputArray[i] != ""){
+          output.value += "-" + outputArray[i] + "\n";
+        }
+      }
+    }
+    output.scrollIntoView({behavior: "smooth"});
+    console.log("done")
+  };
+
+copyButton.onclick = function(){
+  /* Select the text field */
+  output.select();
+  output.setSelectionRange(0, 99999); /*For mobile devices*/
+  
+  if(output.value != ""){
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+  /* Alert the copied text */
+  alert("Your keywords have been copied to your clipboard.");
+  }
+}
+ </script>
+</body>
+</html>
